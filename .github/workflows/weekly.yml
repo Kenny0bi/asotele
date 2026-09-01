@@ -1,0 +1,49 @@
+name: weekly round
+
+# Fridays 12:00 UTC: score whatever has matured, file next week's forecasts,
+# rebuild the scoreboard, commit. The commit this job makes is the timestamp
+# that proves each forecast preceded its target week.
+on:
+  schedule:
+    - cron: "0 12 * * 5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  round:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install numpy pandas scipy requests
+      - name: contracts first, so a broken ledger never commits
+        run: python tests/test_ledger.py
+      - name: score matured rounds
+        run: |
+          python - <<'PY'
+          from asotele.protocol import score_matured
+          done = score_matured()
+          print("scored:", [p.name for p in done] or "nothing matured")
+          PY
+      - name: file next week's forecasts
+        run: |
+          python - <<'PY'
+          from asotele.protocol import make_round
+          p = make_round()
+          print("round:", p.name)
+          PY
+      - name: rebuild the scoreboard
+        run: python assets/make_site.py
+      - name: re-check contracts with the new round included
+        run: python tests/test_ledger.py
+      - name: commit the week
+        run: |
+          git config user.name "asotele ledger"
+          git config user.email "actions@users.noreply.github.com"
+          git add forecasts scores docs data
+          git diff --cached --quiet || git commit -m "weekly round: $(date -u +%F)"
+          git push

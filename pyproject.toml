@@ -1,0 +1,13 @@
+[project]
+name = "asotele"
+version = "0.1.0"
+description = "A public forecast ledger: filed before the fact, scored by a proper rule, kept forever"
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.24", "pandas>=2.0", "scipy>=1.10", "requests>=2.28"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["asotele"]

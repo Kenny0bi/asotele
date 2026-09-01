@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>asotele: a public forecast ledger</title>
+<style>
+  :root { --paper:#10151A; --panel:#19212B; --ink:#E8EDF2; --dim:#8695A4;
+          --rule:#27333F; --good:#4ECDC4; --bad:#FF6B6B; --gold:#F4A259; }
+  * { box-sizing:border-box; margin:0; }
+  body { background:var(--paper); color:var(--ink); font-size:15px;
+    font-family:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+    line-height:1.55; }
+  .serif { font-family:'Iowan Old Style',Palatino,Georgia,serif; }
+  main { max-width:1060px; margin:0 auto; padding:0 22px 110px; }
+  header { padding:78px 0 8px; }
+  .kicker { font-size:11px; letter-spacing:.22em; color:var(--dim); }
+  h1 { font-size:clamp(30px,5vw,50px); margin:12px 0 14px; font-weight:600; }
+  .standfirst { color:var(--dim); max-width:48em;
+                 font-size:clamp(15px,2vw,18px); }
+  h2 { font-size:clamp(19px,3vw,26px); margin:56px 0 12px; font-weight:600; }
+  p { max-width:46em; margin:10px 0; }
+  .dim { color:var(--dim); }
+  .stat-row { display:flex; gap:34px; flex-wrap:wrap; margin:26px 0; }
+  .stat b { display:block; font-size:clamp(24px,4vw,40px);
+             font-family:Georgia,serif; }
+  .stat span { font-size:12px; color:var(--dim); }
+  table { border-collapse:collapse; width:100%; margin:16px 0;
+           font-size:13px; }
+  th { text-align:left; color:var(--dim); font-weight:normal; font-size:11px;
+       letter-spacing:.08em; padding:8px 10px;
+       border-bottom:1px solid var(--rule); }
+  td { padding:9px 10px; border-bottom:1px solid var(--rule);
+       vertical-align:top; }
+  td.num { font-variant-numeric:tabular-nums; }
+  td.truth { color:var(--gold); font-weight:bold; }
+  tr.hit td:last-child { color:var(--good); }
+  tr.miss td:last-child { color:var(--bad); font-weight:bold; }
+  a { color:var(--good); }
+  .rules { background:var(--panel); border-left:3px solid var(--rule);
+            padding:16px 20px; margin:22px 0; font-size:13.5px;
+            color:var(--dim); max-width:52em; }
+  .rules b { color:var(--ink); }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="kicker">ASOTELE&nbsp;&nbsp;/&nbsp;&nbsp;A PUBLIC FORECAST LEDGER</div>
+  <h1 class="serif">Forecasts, filed before the fact</h1>
+  <p class="standfirst serif">Every week this repository commits probabilistic
+  forecasts of verifiable public quantities, then scores them against what
+  actually happened, by a proper scoring rule, forever. Nothing is deleted and
+  nothing can be: the git history is the notary.</p>
+</header>
+
+
+  <p class="dim">No forecast has matured yet. The first scores appear
+  automatically once the first target week ends and its revision window
+  passes. Until then, the only honest scoreboard is an empty one.</p>
+
+<div class="rules">
+  <b>The rules, fixed in advance.</b> Forecasts are 23 quantiles, committed
+  before the target week begins (the commit timestamp on each linked file is
+  the proof). Outcomes are decided by resolution procedures written per target
+  in <a href="https://github.com/Kenny0bi/asotele/blob/main/asotele/targets.py">targets.py</a>, after a
+  waiting period that lets source revisions settle. Scoring is the weighted
+  interval score, a proper rule: the expected score is minimised by honest
+  forecasts, so the only way to look good on this page is to be right.
+  A bad week stays on the ledger with the same weight as a good one.
+</div>
+
+<h2 class="serif">Open forecasts</h2>
+<p class="dim">Filed and frozen. The outcome does not exist yet.</p>
+<table>
+<tr><th>target week</th><th>quantity</th><th>median</th><th>50% interval</th>
+<th>95% interval</th><th>status</th></tr>
+<tr><td><a href="https://github.com/Kenny0bi/asotele/commits/main/forecasts/2026-09-07.json">2026-09-07</a></td><td>Warmest daily maximum at Seattle-Tacoma</td><td class="num">25.8</td><td class="num">23.3 to 28.8</td><td class="num">18.6 to 31.5</td><td class="dim">made 2026-09-01, awaiting the outcome</td></tr>
+<tr><td><a href="https://github.com/Kenny0bi/asotele/commits/main/forecasts/2026-09-07.json">2026-09-07</a></td><td>Warmest daily maximum in Central Park, New York</td><td class="num">29.2</td><td class="num">27.3 to 31.9</td><td class="num">24.2 to 35</td><td class="dim">made 2026-09-01, awaiting the outcome</td></tr>
+<tr><td><a href="https://github.com/Kenny0bi/asotele/commits/main/forecasts/2026-09-07.json">2026-09-07</a></td><td>Earthquakes of magnitude 4.5 or greater, worldwide</td><td class="num">129</td><td class="num">116 to 154.2</td><td class="num">99 to 220</td><td class="dim">made 2026-09-01, awaiting the outcome</td></tr>
+</table>
+
+<h2 class="serif">The record</h2>
+<table>
+<tr><th>target week</th><th>quantity</th><th>forecast median</th>
+<th>outcome</th><th>score (WIS)</th><th>vs naive</th><th>calibration</th></tr>
+<tr><td colspan="7" class="dim">nothing has matured yet</td></tr>
+</table>
+
+<h2 class="serif">What is being forecast</h2>
+<p><b>Earthquakes of magnitude 4.5 or greater, worldwide</b> (count in the target week). <span class="dim">USGS fdsnws event count, minmagnitude=4.5, over the target week in UTC, queried no earlier than 7 days after the week ends. The catalogue is revised for a few days after an event; the 7-day wait lets magnitudes settle, and whatever the API returns at scoring time is final for the ledger.</span></p><p><b>Warmest daily maximum in Central Park, New York</b> (degrees C over the target week). <span class="dim">Open-Meteo archive API, daily temperature_2m_max at 40.7789N 73.9692W, maximum over the 7 local days of the target week, queried no earlier than 7 days after the week ends.</span></p><p><b>Warmest daily maximum at Seattle-Tacoma</b> (degrees C over the target week). <span class="dim">Open-Meteo archive API, daily temperature_2m_max at 47.4444N 122.3139W, maximum over the 7 local days of the target week, queried no earlier than 7 days after the week ends.</span></p>
+
+<footer style="margin-top:70px;padding-top:20px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--dim)">
+  <p>Models are deliberately simple and validated by backtest before launch
+  (held-out coverage 0.50/0.80/0.97 for the earthquake target against nominal
+  0.50/0.80/0.95; details in <a href="https://github.com/Kenny0bi/asotele">the repository</a>). The point
+  of this page is not the models. It is the protocol: filed first, scored by a
+  rule, kept forever.</p>
+  <p style="margin-top:8px">asotele is Yoruba for prophecy. Kenny Obidele.</p>
+</footer>
+</main>
+</body>
+</html>
