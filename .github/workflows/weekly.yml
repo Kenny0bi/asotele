@@ -44,6 +44,6 @@ jobs:
         run: |
           git config user.name "asotele ledger"
           git config user.email "actions@users.noreply.github.com"
-          git add forecasts scores docs data
+          git add -A -- forecasts scores docs data
           git diff --cached --quiet || git commit -m "weekly round: $(date -u +%F)"
           git push
