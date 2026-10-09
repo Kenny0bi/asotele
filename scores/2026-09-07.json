@@ -1,0 +1,33 @@
+{
+ "round": "2026-09-07",
+ "scored_on": "2026-10-09",
+ "targets": {
+  "quakes_m45": {
+   "truth": 101.0,
+   "wis": 18.569,
+   "reference_wis": 19.0,
+   "skill": 0.977,
+   "in50": false,
+   "in80": false,
+   "in95": true
+  },
+  "nyc_tmax": {
+   "truth": 30.3,
+   "wis": 0.846,
+   "reference_wis": 1.7,
+   "skill": 0.498,
+   "in50": true,
+   "in80": true,
+   "in95": true
+  },
+  "sea_tmax": {
+   "truth": 25.0,
+   "wis": 0.94,
+   "reference_wis": 0.3,
+   "skill": 3.135,
+   "in50": true,
+   "in80": true,
+   "in95": true
+  }
+ }
+}
